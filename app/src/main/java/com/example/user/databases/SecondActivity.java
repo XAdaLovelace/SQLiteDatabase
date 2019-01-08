@@ -18,8 +18,6 @@ public class SecondActivity extends AppCompatActivity {
 
 
     ListView lv;
-    ArrayAdapter adp;
-    ArrayList<String> tbl = new ArrayList<>();
     SQLiteDatabase db;
     HelperDB hlp;
 
@@ -31,6 +29,9 @@ public class SecondActivity extends AppCompatActivity {
 
         hlp = new HelperDB(this);
         db = hlp.getWritableDatabase();
+                     //if delete values is needed
+                     //db.delete("User", null, null);
+                     //db.delete("Contact", null, null);
         db.close();
 
         ListView lv = (ListView) findViewById(R.id.lv);
@@ -42,12 +43,13 @@ public class SecondActivity extends AppCompatActivity {
         if (user.getCount() == 0) {
             Toast.makeText(this, "There are no contents in user info list!", Toast.LENGTH_LONG).show();
         } else {
-            while (user.moveToNext()) {
-                    theList.add(user.getString(1));
-                }
+            while (user.moveToNext())
+                theList.add(user.getString(1));
                 ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, theList);
                 lv.setAdapter(listAdapter);
             }
+            user.moveToNext();
+
 
         if (contact.getCount() == 0) {
             Toast.makeText(this, "There are no contents in this list!", Toast.LENGTH_LONG).show();
@@ -57,8 +59,11 @@ public class SecondActivity extends AppCompatActivity {
                 ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, theList);
                 lv.setAdapter(listAdapter);
             }
+            contact.moveToNext();
 
 
         }
+        contact.close();
+        user.close();
     }
 }

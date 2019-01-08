@@ -9,7 +9,7 @@
 
     <item android:id="@+id/SecondActivity"
         android:title="Go To ListView Section"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         />
 
 </menu>

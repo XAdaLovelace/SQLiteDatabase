@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     HelperDB hlp;
 
+    boolean ifDATA, ifDATA2;
+
     EditText phoneNum, eMail, idNum, userName, userAge;
 
     @Override
@@ -49,27 +51,55 @@ public class MainActivity extends AppCompatActivity {
                 String email = eMail.getText().toString();
                 String id = idNum.getText().toString();
 
-                String temp = ""+newPhone+""+email+""+id+"";
-                AddData(temp);
+                String temp = "CONTACT: "+newPhone+":::"+email+":::"+id+" ";
+                AddContactData(temp);
 
             }
         });
 
+        getUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = userName.getText().toString();
+                String age = userAge.getText().toString();
+
+                String temp1 = "USER: "+name+":::"+age+" ";
+                AddUserData(temp1);
+
+            }
+        });
+
+
     }
 
+    public void AddContactData(String temp){
 
 
-    public void AddData(String temp){
 
-        boolean insertData = hlp.addData(temp);
+        boolean insertData = hlp.addContactData(temp);
 
         if(insertData){
             Toast.makeText(this, "Successful.", Toast.LENGTH_LONG).show();
+            ifDATA = true;
         }
         else{
-            Toast.makeText(this, "Bad input.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "No user input!", Toast.LENGTH_LONG).show();
         }
 
+
+    }
+
+    public void AddUserData(String temp1){
+
+        boolean insertData = hlp.addUserData(temp1);
+
+        if(insertData){
+            Toast.makeText(this, "Successful.", Toast.LENGTH_LONG).show();
+            ifDATA2 = true;
+        }
+        else{
+            Toast.makeText(this, "No user input!", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -85,15 +115,17 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.SecondActivity:
-                Intent i=new Intent(this,SecondActivity.class);
-                startActivity(i);
+                if (ifDATA && ifDATA2) {
+                    Intent i = new Intent(this, SecondActivity.class);
+                    startActivity(i);
+                }
                 break;
             case R.id.credits:
                 Toast.makeText(MainActivity.this,
                         "This application was created by Shoam Alaluf", Toast.LENGTH_LONG).show();
                 break;
-        }
 
+        }
         return true;
 
     }

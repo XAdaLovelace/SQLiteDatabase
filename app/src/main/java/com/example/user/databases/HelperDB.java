@@ -51,33 +51,41 @@ public class HelperDB extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        strDelete="DROP TABLE IF EXISTS "+TABLE_USER;
+        strDelete=("delete from "+ TABLE_USER);
+        //strDelete="DROP TABLE IF EXISTS "+TABLE_USER;
         db.execSQL(strDelete);
-        strDelete="DROP TABLE IF EXISTS "+TABLE_CONTACT;
+        strDelete=("delete from "+ TABLE_CONTACT);
         db.execSQL(strDelete);
 
         onCreate(db);
     }
-    public boolean addData(String temp) {
+    ContentValues contactContentValues = new ContentValues();
+    public boolean addContactData(String temp) {
         SQLiteDatabase db = this.getWritableDatabase();
-      //  ContentValues userContentValues = new ContentValues();
-        ContentValues contactContentValues = new ContentValues();
-
-     //   userContentValues.put(NAME, name);
-     //   userContentValues.put(AGE, age);
-
         contactContentValues.put(PHONE, temp);
 
-    //    long result = db.insert(TABLE_USER, null, userContentValues);
-        long result2 = db.insert(TABLE_CONTACT, null, contactContentValues);
+        long result1 = db.insert(TABLE_CONTACT, null, contactContentValues);
 
-        //if date as inserted incorrectly it will return -1
-        if (/*result == -1 || */result2 == -1) {
+        if (result1 == -1) {
             return false;
         } else {
             return true;
         }
     }
+    ContentValues userContentValues = new ContentValues();
+    public boolean addUserData(String temp) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        userContentValues.put(NAME, temp);
+
+        long result2 = db.insert(TABLE_USER, null, userContentValues);
+
+        if (result2 == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public Cursor getUserContents(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data1 = db.rawQuery("SELECT * FROM " + TABLE_USER, null);
