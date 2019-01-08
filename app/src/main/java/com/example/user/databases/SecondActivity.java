@@ -1,10 +1,13 @@
 package com.example.user.databases;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.constraint.solver.widgets.Helper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -65,5 +68,31 @@ public class SecondActivity extends AppCompatActivity {
         }
         contact.close();
         user.close();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch (item.getItemId()) {
+            case R.id.SecondActivity:
+                    Intent i = new Intent(this, MainActivity.class);
+                    startActivity(i);
+
+                break;
+            case R.id.credits:
+                Toast.makeText(SecondActivity.this,
+                        "This application was created by Shoam Alaluf", Toast.LENGTH_LONG).show();
+                break;
+
+        }
+        return true;
+
     }
 }
